@@ -1,0 +1,70 @@
+1/23
+
+first issue (a minor one) is to set up the event. have it triggered by the registration and send he appropriate information
+
+1/25
+
+made an acccount database, the 2nd after namedatase. both ahve a testing databse. make sure everything gets sent to tthe right place
+
+the mongodb extension connects the the connection
+the databse is what the env connects to
+
+
+1/29
+
+had put a premade file in app.get() as a test.
+What I had gotten was 'mongodb://localhost:27017/Accounts_Database', but NO UPDATE
+    
+    so I know that there wasnt some sort of inherent error.
+
+the problem is that there are two different directions the code is going
+
+having the focu and app.get method implies that I want the event of the form to cause the code to run
+but the fact that I was expecting the cpde to update upon the save, (and show the new document) suggests something else
+
+what I need to do is to either:
+    have a way for the code to show up WITHOUT the app.get
+    OR
+    have a way for the code to show up based on the form
+
+should try the second first
+
+forgot mongoose.connect(process.env.Accounturi)
+
+TypeError: path argument is required to res.sendFile
+
+import.meta.dirname  
+    the directory the script is in
+    node example.js from /Users/mjr
+         /Users/mjr
+    not global, local to each module
+import.meta.filename 
+    the filename fo the code being executed
+    node example.js from /Users/mjr
+         /Users/mjr/example.js
+
+1/31
+
+app.get about wotking with get requests
+app.post to the dateabse...or something like that
+
+
+2/1
+
+partial success. can send the email and passwords to mondob, but for whatever reason, not the username. likely a small syntacical error.
+
+I have successfully. managed to make and send account data to a database.
+
+other things I need to do:
+
+have proper code shown when chaing the url
+    (this is likely where the ejs template engine starts to matter )
+have confirmation emails sent to an email
+have a way to block out the passwords
+have good password standards
+have a way to sign into an account
+have a way to reset your password
+have tfa
+have warning that you got the username or password wrong
+
+start with ejs
