@@ -7,7 +7,9 @@ import mongoose from 'mongoose';
 import nodemon from 'nodemon';
     //live updates
 import bodyParser from 'body-parser';
+    //simplifies request bodies
 import ejs from 'ejs';
+    //allows reusable templates
 import * as path from 'path';
     //allow work with files and pathings
 
@@ -40,13 +42,14 @@ const Account = new mongoose.model("Account",userSchema)
 
     
 
-app.use(express.static(path.join(__dirname)));
+//app.use(express.static(path.join(__dirname)));
 
  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, import.meta.url));
-    res.sendFile(path.join(__dirname, "index.html"));
-      res.sendFile(path.join(__dirname, "AccountMakingPractice.css"));  
-    res.sendFile();
+    res.render('home.ejs')  
+   // res.sendFile(path.join(__dirname, import.meta.url));
+    ///res.sendFile(path.join(__dirname, ""));
+     //res.sendFile(path.join(__dirname, "AccountMakingPractice.css"));  
+    //res.sendFile();
      console.log("Success")
  });
 
@@ -68,6 +71,6 @@ const user1 = Account.create({
 
  app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-     console.log("Azterketa")
-    })
+    console.log(__dirname)
+})
      

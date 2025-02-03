@@ -66,5 +66,16 @@ have a way to sign into an account
 have a way to reset your password
 have tfa
 have warning that you got the username or password wrong
+social media feed
 
 start with ejs
+
+2/2
+
+needed to make an update. 
+
+nothings showing up. fix that. likely pathing involved
+
+2/3
+
+everything runs on index.html, but nothign on home.ejs
