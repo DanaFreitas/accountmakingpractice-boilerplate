@@ -79,3 +79,153 @@ nothings showing up. fix that. likely pathing involved
 2/3
 
 everything runs on index.html, but nothign on home.ejs
+didnt need res.sendFile(path.join(__dirname, 				import.meta.url));
+should probably integrate MVC early
+
+Model: Manages the information and responds to requests from other info 
+View: what the user interacts with. they sened info and get updates
+Controller: handles user input and both updates the Model and the View based on model changes. Stuff like input validation and user transformation
+
+exL signing on
+    the view gets the login credentials and sends to the controller. 
+    the controller figures out if its legit and sends to model
+    model will send info of answer(and its data) to the view
+
+but before that: I need to first get the css to work. I have it properly linked (at least I think so), do I need rid of index html first?
+    tried. didnt work. at least everything else is still showing up
+
+//res.render('AccountMakingPractice.css') is NOTHING
+
+2/4
+
+app.use(express.static(path.join(__dirname, 'views' ))); was needed
+
+for regex, anything...@...".""com"?
+
+Actually....I need to get to the formatting first.
+Used ejs to make some reusable assets, like the layout menu. 
+I will be light on the layout, will focus on functionality first. Need to make sure there are plenty of proper links.
+    make sure all fo the buttons link to the proper urls
+
+
+should be able to use 
+
+
+
+let MenuButton = document.querySelectorAll('[data-button="defaultmenuitem"]');
+
+
+
+for (let l = 0; l < MenuButton.length; l++) {
+  MenuButton[l].addEventListener("click", (evt) => {
+  
+      let thehref = MenuArray[l].getAttribute("href");
+      contain.push(thehref);
+     console.log(seccuss3)
+    console.log(MenuArray)
+          MenuArray[l].addEventListener("click", (evt) => {
+            let thehref = MenuArray[l].getAttribute("href");
+            console.log(thehref)
+            let hrefslice = thehref.slice(1);
+            window.location.href = `${hrefslice}.html`;
+            contain = []
+        
+  
+    });
+
+  })}  
+
+  somehow
+
+  NavbarButton
+
+
+  2/5
+
+  cant use document with the function I had. forgot.
+    i think i need to do an app.get for the...either the buttons or the page.
+        and the res.render will render the right page
+
+if (typeof window !== 'undefined') { code}
+    can cause it to work
+    or at least not run an error.
+
+I need to first incorporate it in express code
+
+<a href="...watever"> + app.get(thehref) will allow the links to work 
+
+I managed to get the links to work. so NEXT 
+    have confirmation emails sent to an email
+
+
+2/13
+
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+soemthing like this for email validation.
+
+there is a console.log for "failure" but it seems like the email validation is working
+    forgot the theemail argument
+
+next...I need to find a way to send the email. will need UUID and nodemailer
+
+https://www.developerupdates.com/blog/email-verification-in-javascript 
+dont want to blindly copy paste. try to understand
+
+2/14
+3/15
+
+TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received an instance of Object
+
+
+3/16
+The terminal process termainated with exit code 
+1073741510
+
+
+//import { app, PORT} from './app.js'
+    needed to be gone, because nothing was being imported
+
+3/17
+
+both port and app are not being imported. i can declare them in the file and they will work, but not otherwise
+
+3/20
+
+I need to have the import to start with export
+
+export const professor = "Utonium"
+export const girls =["Bubbles", "Blossom", "Buttercup"]
+
+test('Who is the professor', () =>{
+ expect(professor).toBe("Utonium")
+ })
+
+
+ 3/21
+
+ a few strange things
+
+ trying
+ vitest --run --debug
+ but it said vitest isnt recognized
+    could be error of ai?
+need to check.
+
+
+3/22
+
+moved declarations into utils and it worked
+
+the issue is that importing everything causes the whole file to run, including the server parts
+    other thigngs can cause error, there can be functions being run multiple times, etc...
+
+maybe its time to start distribtuting code
+
+
+3/23
+
+MVC
+
+model how data organized
+view what users see
+controllers interacts inputs with the modal
