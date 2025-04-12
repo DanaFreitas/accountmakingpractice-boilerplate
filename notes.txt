@@ -229,3 +229,331 @@ MVC
 model how data organized
 view what users see
 controllers interacts inputs with the modal
+
+
+exported the userparts
+
+registering should be something
+and validating email
+figure out where all f of the app.whatever go
+
+
+3/24
+
+need to do move the register post. might have to move around the declarations.
+
+
+3/25
+
+still organizing the code.
+go to newuser.find a way to import userschema
+
+
+
+3/26
+
+import PORT from "./config/port.js"
+       ^^^^
+SyntaxError: The requested module './config/port.js' does not provide an export named 'default'
+    at ModuleJob._instantiate (node:internal/modules/esm/module_job:177:21)
+    at async ModuleJob.run (node:internal/modules/esm/module_job:260:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:543:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+
+Node.js v22.11.0
+PS C:\Users\danar\WebDevProjects\AccountMakingPractice> 
+
+export const   PORT = 3000;
+    bad
+export default PORT = 3000;
+    good
+
+
+
+3/28
+
+named exports vs default exports
+
+named exports can be many in one module
+    export function add(a, b) {
+          return a + b;
+        }
+    export function subtract(a, b) {
+        return a - b;
+        }
+
+    import { add, subtract } from './math.js';
+
+
+default exports allow only module
+
+    export default function add(a, b) 
+            {return a + b;}
+    import addFunction from './math.js';
+            can assign any name to it
+
+
+figure out the newuser module
+
+app.post("/register", newUser );
+ReferenceError: newUser is not defined
+    This is the error. I need to have the module declared
+        it starts with the register button triggering it        
+        this will allow the newuser to run (and it having the import for the schema)
+        I need to export....the specific function that will run. it will update the database along with the post changin g the url
+
+
+3/29
+
+MongooseError: The `uri` parameter to `openUri()` must be a string, got "undefined". 
+Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
+
+
+idea:i could write unit test for the mongoose connection
+
+
+I think I have been mixing up user and new user. should clear up the wording
+
+.env needs to be in the root folder
+
+
+
+
+testing the website on the console. its stalling on the actual account creation visually
+remember where its being updated!
+
+
+3/31
+
+changed port number to allign with the one for mongodb
+
+I need to add the rendering of the new page
+
+changed the host to 28017 from 27017       
+    could get to the home page but not much else    
+
+keep the earlier 3000/21017
+
+when filing out the forms, the acual registeration is at /RegisterAccount
+    
+I need to modify app.post("/register", newAccount);
+
+
+If app.get("/RegisterAccount", (req, res) => {
+    res.render("RegisterAccount.ejs")
+  });
+    comes from the button 
+href="/RegisterAccount" is what the navbar gives
+
+
+I need to modify app.post("/register", newAccount);
+action="/register" is what the form gives 
+
+add an href to the button in the form. if this doesnt work, 
+change the name or formatting fo the form. there needs to be some way to combine the two.
+
+
+
+ireally should learn mocking this stuff
+
+get and post a bit mixed up. ned to have get for the register action. post fo rthe registerac account   
+    rename register to registeraction? 
+
+4/1
+
+maybe the book will have an idea. i have checked code. each get or post has a different name and function
+
+look for the .ejs formatting
+
+the navbar 
+
+for them 
+example
+different sets for if logged in. can do if statements for ejs formats.
+
+<a class="nav-link" href="/auth/register">New User</a>
+    this is a button that changes the url 
+app.get('/auth/register', redirectIfAuthenticatedMiddleware, newUserController);
+    when the url changes to auth/register, the two functions will run as well
+        const redirectIfAuthenticatedMiddleware = require('./middleware/redirectIfAuthenticatedMiddleware');    
+                checking if everything is fine
+        const newUserController = require('./controllers/newUser');
+new user    
+
+
+the issue is module.exports = (req, res) =>{ 
+    var username = "" 
+    var password = ""
+    const data = req.flash('data')[0];    
+
+    if(typeof data != "undefined"){        
+        username = data.username
+        password = data.password
+    }
+     
+    res.render('register',{        
+        errors: req.flash('validationErrors'),
+        username: username,
+        password: password
+    })
+}
+
+idk what where this goes next. 
+nvm goes to register.ejs
+
+
+all of that was to set up fo rthe registeration page, not the registration tiself!
+
+looks like after the registration, the next part is a post. in the post is where the redirect is back to home, which has an if statement. 
+
+so the module has the redirect, not the app.js
+
+the storeuser would create and export the user, then redirect to home
+
+
+4/2/2025
+
+I made a way to make accounts and log back in. what I need to do next is modify the document based on whether or not the account is logged in.
+ will do some styling
+then, I will figure out how to do signing in and out, and deleting accounts
+and password protection
+
+4/3/2025
+
+
+should loggedin be different from / or should they be if statements
+maybe I should have a greeting X to make sure soemthign works
+
+to login, I need to retrieve from the database.
+could make a test for that 
+
+I need to use .find for the user. jsut need to figure out how to connect them all together. 
+
+use mongoose documents
+
+
+I need to figure out a list of everything I need to do, to get it out of my head.
+
+I need to find a way to be "logged on"
+maybe an object that starts off empty.
+I can have the login/registration credientials be exported to the page the object is on
+during the log on, the object needs to be filled with the account info
+that in turn can be exported to the front page.
+
+
+I can probably make a test using the loginstatus. just need to set that up first
+
+I THINK I set it up. so now I just need to set up the test and try that out. also figure out mocking
+
+
+4/8
+
+I need to mock the following
+  does the account creation work?
+    mock a creation of an account. 
+    how do I make sure that the creation is sent to the database?
+  does the account search work?
+    I will need to figure out how to do this part in the program proper next
+
+
+issue. spyon might not be as good as using .mock
+other issue: have i been using mocks or stubs?
+
+4/9
+
+what I can do is run vi.mock of the account creation 
+    how do I mock the event running?
+
+    learned about factory functinos and hoisting
+
+I have an error 
+
+OverwriteModelError: Cannot overwrite `Account` model once compiled.
+ ❯ new model node_modules/mongoose/lib/mongoose.js:606:13
+ ❯ models/User.js:16:24
+     14| });
+     15|
+     16| export const Account = new mongoose.model("Account", userSchema);
+
+
+4/10
+
+the issue is the modal is being compiled multiple times when I run the test.
+
+
+
+4/11
+
+export const Account = new mongoose.model("Account", userSchema);
+this is being exported from User.js
+    how is that being applied to the test? 
+    I susepect its import {Schema, Account} from './models/User.js'
+
+that gives me TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object.
+ Received an instance of Object
+
+ idea. the new account is being imported by import {Schema, Account}, so having the import of 
+ new account (which imports Account) means its being run twice! 
+
+
+
+ The question though: is why I get the error nothing is being run when the import is gone? 
+
+looking ove rthe code more, i am doing both an import of new account and declaring a variable based on new account.
+maybe i should declare a variable based on account instead
+    or something else
+
+having both new accounts means that the user model is being imported twice
+
+4/12
+
+i edited out import newAccount from '../controllers/newAccount.js'
+and 
+import {Schema, Account} from './models/User.js'
+
+that just gives the error
+
+ReferenceError: newAccount is not defined
+
+I NEED the newaccount module to be defined. I suspect I will need to rework the tests instead of the variable declaration
+
+I added back new account and got the error 
+TypeError: The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. 
+Received an instance of Object
+
+This is likely because nothing is being returned for thew tests
+
+un comment out  and i get 
+
+OverwriteModelError: Cannot overwrite `Account` model once compiled.
+
+4/12 
+
+I made a change. instead of mocking the newaccount, i am mocking the account to tryo to stop a duplicate of the newaccount module from occuring.
+
+the error I got was 
+
+
+TypeError: First argument to `Model` constructor must be an object, **not** a string. 
+Make sure you're calling `mongoose.model()`, not `mongoose.Model()`.
+ ❯ model.Model node_modules/mongoose/lib/model.js:125:11
+ ❯ new model node_modules/mongoose/lib/model.js:4656:15
+ ❯ Module.model node_modules/mongoose/lib/model.js:4651:16
+ ❯ tests/accounts.test.js:39:1
+     37| vi.mock('../controllers/newAccount.js', {spy:true})
+     38| const result = Account("mocktest","mocktest","mocktest@mocktest.com")
+     39| 
+       | ^
+     40| test("The account creation works", () => {
+     41| expect(result.toBeDefined)
+
+
+I need to have objects instead of strings.
+
+having name, email, password isnt working directly
+
+I have a few options
+I can figure out what should be in Account()
+I can import the name,email,password, from....somewhere
+
+do I need to have a fake account created?

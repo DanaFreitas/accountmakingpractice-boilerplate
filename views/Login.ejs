@@ -5,10 +5,28 @@
   <%- include('layouts/navbar'); -%>
 
 
+
+  <% if (loggedIn) { %>
+
+
+    <body>
+      
+      <div>Welcome to petopia!</div>
+      <div id="yourid"></div>
+
+    <% } %>
+
+
+
+
+  <% if (!loggedIn) { %>
+
+
+
   <section id="login">
     <div>Login Here</div>
     
-    <form id="form" action="/login" method="post">
+    <form id="form" action="/loginaction" method="post">
         
         <label for="userlogin"> username </label>
         <input type="text" name="userlogin" id="userlogin" required />
@@ -16,14 +34,11 @@
     
       <label for="passwordlogin">password </label>
       <input type="text" name="passwordlogin" id="passwordlogin" required />
-      <button id="button" value="Subscribe!">EJS!</button>
+      <button id="button" value="Subscribe!">Login!</button>
     </div>
-    
-    
-      
     </section>
     
-
+    <% } %>
 
 
 

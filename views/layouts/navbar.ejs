@@ -1,7 +1,23 @@
 <nav id="navbar">
     <a href="/" class="MenuButton" data-button="NavbarItem" type="button" value="0" role="menuitem">Home</a>
-    <a href="/RegisterAccount" class="MenuButton" data-button="NavbarItem" type="button" value="1" role="menuitem">Register Account</a>
-    <a href="/Login" class="MenuButton" data-button="NavbarItem" type="button" value="2  " role="menuitem">Login</a>
+
+    <a href="/Selection" class="MenuButton" data-button="NavbarItem" type="button" value="1" role="menuitem">View Selection</a>
+
+<% if (loggedIn) { %>
+    <a href="/Logoff" class="MenuButton" data-button="NavbarItem" type="button" value="2" role="menuitem">Log off</a>
+    <a href="/Delete" class="MenuButton" data-button="NavbarItem" type="button" value="3" role="menuitem">Delete Account</a>
+    
+<% } %>
+
+
+<% if (!loggedIn) { %>
+    <a href="/RegisterAccount" class="MenuButton" data-button="NavbarItem" type="button" value="4" role="menuitem">Register Account</a>
+    <a href="/Login" class="MenuButton" data-button="NavbarItem" type="button" value="5" role="menuitem">Login</a>
+
+<% } %>
+
+
+
     <!-- <button data-button="NavbarItem" href="home" class="MenuButton" id="HomeButton">Home</button>
     <button data-button="NavbarItem" href="RegisterAccount" class="MenuButton" id="RegisterAccountButton">Create Account</button>
     <button data-button="NavbarItem" href="Login" class="MenuButton" id="LoginButton">Login</button> -->
